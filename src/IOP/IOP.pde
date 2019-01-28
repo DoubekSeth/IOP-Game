@@ -2,6 +2,7 @@
 Hero hero;
 int canBeDamaged;
 boolean canFire;
+boolean lost = false;
 
 //Inputs
 boolean[] keys;
@@ -27,17 +28,19 @@ ArrayList<Boolean> hasDoneEmote;
 boolean emote;
 PFont font;
 
+boolean intro;
 void setup() {
   //Bosses
   bossCounter = 0;
   enemyProjectiles = new ArrayList<EnemyProjectile>();
+  intro = true;
 
   bossesActive = new boolean[4];
   bosses = new Boss[4];
 
-  VirvaltTheSyntactical = new Boss(25, 400, 150, 150, 255, 0, 255, false);
+  VirvaltTheSyntactical = new Boss(25, 500, 150, 150, 255, 0, 255, false);
   bosses[0] = VirvaltTheSyntactical;
-  GorgoneshTheForeshadower = new Boss(17, 300, 100, 100, 250, 0, 250, false);
+  GorgoneshTheForeshadower = new Boss(17, 500, 100, 100, 250, 0, 250, false);
   bosses[1] = GorgoneshTheForeshadower;
   YsceraTheFateweaver = new Boss(3, 500, 100, 100, 0, 250, 0, false);
   bosses[2] = YsceraTheFateweaver;
@@ -137,6 +140,9 @@ void detectBlock() {
     hero.y = height-18;
   } else if (hero.y < 18) {
     hero.y = 18;
+  }
+  if (hero.health <= 0) {
+    //noLoop();
   }
 }
 
@@ -262,6 +268,10 @@ void bossUpkeep() {
       bossesActive[3] = false;
       bossCounter = 0;
     }
+  } else if (intro) {
+    textSize(32);
+    text("Comparison Between Beginning and Ending of Fifth Business", width/2, height/3);
+    text("By: Seth Doubek", width/2, height/4);
   }
 }
 
